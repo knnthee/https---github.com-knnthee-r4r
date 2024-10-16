@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Room;
+use App\Models\Booking;
 
 
 class AdminController extends Controller
@@ -17,7 +18,8 @@ class AdminController extends Controller
           $usertype = Auth()->user()->usertype;
           if($usertype=='user')
           {
-            return view('dashboard');
+            $room = Room::all();
+            return view('home.index', compact('room'));
           }
           
           else if($usertype=='admin')
@@ -32,6 +34,11 @@ class AdminController extends Controller
     }
 
 
+    public function home()
+    {
+      $room = Room::all();
+      return view('home.index', compact('room'));
+    }
 
     public function create_room()
     {
@@ -95,7 +102,7 @@ class AdminController extends Controller
       $data->room_title = $request->title;
       $data->description = $request->description;
       $data->price = $request->price;
-      $data->wifi = $request->wifi;
+      $data->wifi = $request->wifi;                                                                                                                                     
       $data->room_type = $request->type;
       $image=$request->image;
       if($image)
@@ -107,5 +114,41 @@ class AdminController extends Controller
      
       $data->save();
       Return redirect()->back();  
+    }
+
+    public function bookings(){
+
+      $data=Booking::all();
+      return view('admin.booking' ,compact('data'));
+    }
+
+    public function delete_booking($id)
+    {
+      $data = Booking::find($id);
+
+      $data->delete();
+
+      return redirect()->back();
+    }
+
+
+    public function approve_book($id)
+    {
+      $booking = Booking::find($id);
+
+      $booking->status='approved';
+      $booking->save();
+
+      return redirect()->back();
+    }
+
+    public function reject_book($id)
+    {
+      $booking = Booking::find($id);
+
+      $booking->status='rejected';
+      $booking->save();
+
+      return redirect()->back();
     }
 }
