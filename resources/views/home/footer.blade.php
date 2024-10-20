@@ -42,9 +42,9 @@
                 <div class="col-md-10 offset-md-1">
                    
                    <p>
-                   © 2019 All Rights Reserved. Design by <a href="https://html.design/"> Free Html Templates</a>
+                   <a href="https://html.design/"> </a>
                    <br><br>
-                   Distributed by <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+                   Distributed by <a href="https://themewagon.com/" target="_blank"StayWise</a>
                    </p>
 
                 </div>

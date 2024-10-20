@@ -17,4 +17,6 @@ class Room extends Model
         'wifi',
         'room_type',
     ];
+
+    
 }

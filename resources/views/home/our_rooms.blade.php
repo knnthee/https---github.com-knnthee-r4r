@@ -17,10 +17,7 @@
       <!-- end header inner -->
       <!-- end header -->
       <!-- banner -->
-      @include('home.slider')
-      <!-- end banner -->
-      <!-- about -->
-      @include('home.about')
+  
       <!-- end about -->
       <!-- our_room -->
     @include('home.room')

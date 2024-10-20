@@ -24,7 +24,12 @@ class AdminController extends Controller
           
           else if($usertype=='admin')
           {
-            return view('admin.index');
+            $room = room::where('status','approved')->get()->count();
+            return view('admin.index', compact('room'));
+          }
+          else if($usertype=='owner')
+          {
+            return view('owner.index');
           }
           else
           {
@@ -33,122 +38,52 @@ class AdminController extends Controller
         }
     }
 
-
     public function home()
     {
-      $room = Room::all();
+      $room = Room::where('status','=','Approved')->get();
       return view('home.index', compact('room'));
     }
 
-    public function create_room()
-    {
-      return view('admin.create_room');
-    }
-
-    public function add_room(Request $request)
-    {
-     $data = new Room ();
- 
-     $data->room_title = $request->title;
-     $data->description = $request->description;
-     $data->price = $request->price;
-     $data->wifi = $request->wifi;
-     $data->room_type= $request->type;
-     $image=$request->image;
-     if($image)
-     {
-      $imagename =time().'.'.$image->getClientOriginalExtension();
-      $request->image->move('room',$imagename);
-      $data->image= $imagename;
-     }
-
-     $data->save();
-     
-     return redirect()->back();
-
-    }
-
-    public function view_room()
+    public function approval_room()
     {
 
       $data =Room::all();
-      return view('admin.view_room',compact('data'));
+      return view('admin.approval_room',compact('data'));
 
     }
 
-    public function room_delete($id)
+    public function approve_post($id)
     {
+      $room = Room::find($id);
 
-      $data =Room::find($id);
-
-      $data->delete();
-      return redirect()->back();
-
-    }
-
-    public function room_update($id)
-    {
-
-      $data = Room::find($id);
-      return view('admin.update_room',compact('data'));
-
-    }
-
-    public function edit_room(Request $request, $id)
-    {
-
-      $data = Room::find($id);
-
-      $data->room_title = $request->title;
-      $data->description = $request->description;
-      $data->price = $request->price;
-      $data->wifi = $request->wifi;                                                                                                                                     
-      $data->room_type = $request->type;
-      $image=$request->image;
-      if($image)
-      {
-      $imagename =time().'.'.$image->getClientOriginalExtension();
-      $request->image->move('room',$imagename);
-      $data->image= $imagename;
-      }
-     
-      $data->save();
-      Return redirect()->back();  
-    }
-
-    public function bookings(){
-
-      $data=Booking::all();
-      return view('admin.booking' ,compact('data'));
-    }
-
-    public function delete_booking($id)
-    {
-      $data = Booking::find($id);
-
-      $data->delete();
+      $room->status='approved';
+      $room->save();
 
       return redirect()->back();
     }
 
-
-    public function approve_book($id)
+    public function reject_post($id)
     {
-      $booking = Booking::find($id);
+      $room = Room::find($id);
 
-      $booking->status='approved';
-      $booking->save();
+      $room->status='rejected';
+      $room->save();
 
       return redirect()->back();
     }
 
-    public function reject_book($id)
-    {
-      $booking = Booking::find($id);
+    public function view_admin_room()
+{
+    // Fetch all room data
+    $data = Room::all();  // Correct the variable name to 'data' for room details
+    
+    // Count approved rooms
+    $room = Room::where('status', 'approved')->count();
 
-      $booking->status='rejected';
-      $booking->save();
-
-      return redirect()->back();
-    }
+    // Pass both 'data' and 'room' to the view
+    return view('admin.view_admin_room', compact('data', 'room'));
 }
+
+
+
+  }

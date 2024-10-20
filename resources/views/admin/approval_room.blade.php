@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+
 <html>
   <head> 
     @include('admin.css')
@@ -34,6 +36,7 @@
     
     </style>
 
+    
     <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
@@ -49,7 +52,8 @@
                     <th class="th_deg">Room Type</th>
                     <th class="th_deg">Image</th>
                     <th class="th_deg">Delete</th>
-                    <th class="th_deg">Update</th>
+                    <th class="th_deg">Status</th>
+                    <th class="th_deg">Status Update</th>
                 </tr>
 
                 @foreach($data as $data)
@@ -60,6 +64,8 @@
                     <td>₱{{$data->price}}</td>
                     <td>{{$data->wifi}}</td>
                     <td>{{$data->room_type}}</td>
+                    
+                    
                     <td>
                         <img width="100" src="room/{{$data->image}}">
                     </td>
@@ -67,11 +73,36 @@
                         <a onclick="return confirm('Are you sure to delete this?');" class="btn btn-danger" href="{{url('room_delete',$data->id)}}">Delete</a>
 
                     </td>
+                 
                     <td>
-                        <a class="btn btn-warning" href="{{url('room_update',$data->id)}}">Update</a>
+                        @if($data->status == 'approved')
 
+                        <span style="color: green;">Approved</span>
+
+                        @endif
+
+                        @if($data->status == 'rejected')
+
+                        <span style="color: red;">Rejected</span>
+
+                        @endif
+
+                        @if($data->status == 'waiting')
+
+                        <span style="color: yellow;">Waiting</span>
+                        @endif
+                    </td>
+
+                    <td>
+                        <span style="padding-bottom: 15px;">
+                            <a class="btn btn-success" href="{{url('approve_post', $data->id)}}">Approve</a>
+                        </span>
+                        <a class="btn btn-danger"
+                            <a class="btn btn-success" href="{{url('reject_post', $data->id)}}">Reject</a>
                     </td>
                 </tr>
+
+
 
                 @endforeach
 

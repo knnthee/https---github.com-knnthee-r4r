@@ -4,7 +4,9 @@
           <div class="col-md-5">
              <div class="titlepage">
                 <h2>About Us</h2>
-                <p>The passage experienced a surge in popularity during the 1960s when Letraset used it on their dry-transfer sheets, and again during the 90s as desktop publishers bundled the text with their software. Today it's seen all around the web; on templates, websites, and stock designs. Use our generator to get your own, or read on for the authoritative history of lorem ipsum. </p>
+                <p> At staywise, we make it easy to find the perfect
+                  dorm or room in Dagupan, Pangasinan, offering a convenient and reliable
+               platform to match you with your ideal accommadation </p>
                 <a class="read_more" href="Javascript:void(0)"> Read More</a>
              </div>
           </div>
